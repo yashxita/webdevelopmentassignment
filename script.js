@@ -1,0 +1,258 @@
+let weatherCondition = "clear";
+const weatherMoods = {
+  rain: {
+    moods: ["romantic", "gloomy", "chill"],
+    activities: [
+      "Read a book",
+      "Watch a movie",
+      "Sip hot cocoa",
+      "Listen to lo-fi music",
+      "Paint or sketch",
+    ],
+    food: [
+      "Soup",
+      "Hot chocolate",
+      "Pasta",
+      "Grilled cheese sandwich",
+      "Mug cake",
+    ],
+  },
+  clear: {
+    moods: ["happy", "energetic", "relaxed"],
+    activities: [
+      "Go for a walk",
+      "Play outdoor sports",
+      "Picnic in the park",
+      "Photography",
+      "Try a new café",
+    ],
+    food: [
+      "Salad",
+      "Smoothies",
+      "Grilled chicken",
+      "Fresh fruit bowl",
+      "Iced coffee",
+    ],
+  },
+  cloudy: {
+    moods: ["melancholic", "thoughtful", "calm"],
+    activities: [
+      "Journaling",
+      "Listen to jazz",
+      "Go to a café",
+      "Read poetry",
+      "Solve puzzles",
+    ],
+    food: ["Coffee", "Pastries", "Warm tea", "Soup dumplings", "Garlic bread"],
+  },
+  snow: {
+    moods: ["cozy", "peaceful", "nostalgic"],
+    activities: [
+      "Sit by the fireplace",
+      "Bake cookies",
+      "Watch old movies",
+      "Knit or crochet",
+      "Write a letter",
+    ],
+    food: [
+      "Hot chocolate",
+      "Cookies",
+      "Stew",
+      "Mac and cheese",
+      "Cinnamon rolls",
+    ],
+  },
+  thunderstorm: {
+    moods: ["intense", "moody", "deep"],
+    activities: [
+      "Write poetry",
+      "Watch a thriller",
+      "Play video games",
+      "Listen to heavy metal",
+      "Meditate",
+    ],
+    food: [
+      "Spicy ramen",
+      "Grilled cheese",
+      "Dark chocolate",
+      "Nachos with dip",
+      "Chili",
+    ],
+  },
+  sunny: {
+    moods: ["energetic", "playful", "happy"],
+    activities: [
+      "Go to the beach",
+      "Bike ride",
+      "Do yoga outdoors",
+      "Go hiking",
+      "Try a water sport",
+    ],
+    food: ["Ice cream", "Fruit salad", "Grilled fish", "Lemonade", "Tacos"],
+  },
+};
+async function fetchWeather() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      const apiKey = "ab44c6bf9ba74232b6990816252402";
+      const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lat},${lon}`;
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        weatherCondition = data.current.condition.text.toLowerCase();
+        updateMoodOptions();
+        applyWeatherTheme(weatherCondition);
+        displayRecommendations();
+
+        document.getElementById("weather").innerHTML = `
+          <div class="weather-box">
+            <h3 class="weather-title">${data.location.name}, ${data.location.country}</h3>
+            <div class="weather-details">
+              <div class="weather-left">
+                <p><strong>Temperature:</strong> ${data.current.temp_c}°C</p>
+                <p><strong>Feels Like:</strong> ${data.current.feelslike_c}°C</p>
+                <p><strong>Condition:</strong> ${data.current.condition.text}</p>
+                <p><strong>Humidity:</strong> ${data.current.humidity}%</p>
+              </div>
+              <div class="weather-right">
+                <p><strong>Wind Speed:</strong> ${data.current.wind_kph} km/h</p>
+                <p><strong>Wind Direction:</strong> ${data.current.wind_dir}</p>
+                <p><strong>Pressure:</strong> ${data.current.pressure_mb} mb</p>
+                <p><strong>Visibility:</strong> ${data.current.vis_km} km</p>
+              </div>
+            </div>
+          </div>
+        `;
+      } catch (error) {
+        document.getElementById("weather").textContent =
+          "Unable to fetch weather data.";
+      }
+    });
+  }
+}
+
+function updateMoodOptions() {
+  const moodSelect = document.getElementById("mood");
+  moodSelect.innerHTML = "";
+  const moods = weatherMoods[
+    Object.keys(weatherMoods).find((key) => weatherCondition.includes(key))
+  ]?.moods || ["happy"];
+  moods.forEach((mood) => {
+    const option = document.createElement("option");
+    option.value = mood;
+    option.textContent = mood.charAt(0).toUpperCase() + mood.slice(1);
+    moodSelect.appendChild(option);
+  });
+}
+function displayRecommendations() {
+  const recommendationsDiv = document.getElementById("recommendations");
+  const moodKey =
+    Object.keys(weatherMoods).find((key) => weatherCondition.includes(key)) ||
+    "clear";
+  const activityList = weatherMoods[moodKey]?.activities || ["Relax at home"];
+  const foodList = weatherMoods[moodKey]?.food || ["Comfort food"];
+  const selectedActivities = activityList.slice(0, 5);
+  const selectedFood = foodList.slice(0, 5);
+
+  recommendationsDiv.innerHTML = `
+    <h3>Recommended</h3>
+    <div class="recommendation-columns">
+      <div class="column left-align">
+        <strong>Activities</strong>
+        <div class="text-list">
+          ${selectedActivities.map((activity) => `<p>${activity}</p>`).join("")}
+        </div>
+      </div>
+      <div class="column right-align">
+        <strong>Food</strong>
+        <div class="text-list">
+          ${selectedFood.map((food) => `<p>${food}</p>`).join("")}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function applyWeatherTheme(condition) {
+  document.body.className = "";
+  const audioElement = document.getElementById("background-audio");
+  let audioFile = "";
+
+  for (let key in weatherMoods) {
+    if (condition.includes(key)) {
+      document.body.classList.add(key);
+      audioFile = `${key}.mp3`; 
+      break;
+    }
+  }
+
+  if (audioFile) {
+    audioElement.src = audioFile;
+    audioElement.play().catch((error) => {
+      console.error("Audio playback failed:", error);
+    });
+  } else {
+    audioElement.pause();
+    audioElement.src = "";
+  }
+}
+let allSongs = [];
+async function generatePlaylist() {
+  const mood = document.getElementById("mood").value;
+  const apiKey = "9c99acb3b0dd6b28314ed0740e50e7ee";
+  const url = `https://ws.audioscrobbler.com/2.0/?method=tag.gettoptracks&tag=${mood}&api_key=${apiKey}&format=json`;
+  const playlistDiv = document.getElementById("playlist");
+  playlistDiv.innerHTML = "";
+  try {
+    if (!allSongs.length || allSongs.mood !== mood) {
+      const response = await fetch(url);
+      const data = await response.json();
+      if (data.tracks && data.tracks.track) {
+        allSongs = { mood, songs: data.tracks.track };
+      } else {
+        playlistDiv.textContent = "No songs found for this mood.";
+        return;
+      }
+    }
+    const shuffledSongs = [...allSongs.songs]
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 20);
+    shuffledSongs.forEach((song) => {
+      const card = document.createElement("div");
+      card.classList.add("card");
+      card.innerHTML = `
+                <h4>${song.name}</h4>
+                <p>${song.artist.name}</p>
+            `;
+      card.onclick = () => window.open(song.url, "_blank");
+      playlistDiv.appendChild(card);
+    });
+  } catch (error) {
+    playlistDiv.textContent = "Failed to generate playlist. Try again later.";
+  }
+}
+
+function savePlaylist() {
+  const songs = document.querySelectorAll(".playlist .card");
+  if (songs.length === 0) {
+    alert("No songs in the playlist to save.");
+    return;
+  }
+  let playlistContent = "Your Personalized Playlist 🎵\n\n";
+  songs.forEach((song, index) => {
+    playlistContent += `${index + 1}. ${song.querySelector("h4").innerText} - ${
+      song.querySelector("p").innerText
+    }\n`;
+  });
+  const blob = new Blob([playlistContent], { type: "text/plain" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "My_Playlist.txt";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+fetchWeather();
