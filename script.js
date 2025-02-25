@@ -98,7 +98,6 @@ async function fetchWeather() {
       const lon = position.coords.longitude;
       const apiKey = "ab44c6bf9ba74232b6990816252402";
       const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lat},${lon}`;
-
       try {
         const response = await fetch(url);
         const data = await response.json();
@@ -106,7 +105,6 @@ async function fetchWeather() {
         updateMoodOptions();
         applyWeatherTheme(weatherCondition);
         displayRecommendations();
-
         document.getElementById("weather").innerHTML = `
           <div class="weather-box">
             <h3 class="weather-title">${data.location.name}, ${data.location.country}</h3>
@@ -133,10 +131,8 @@ async function fetchWeather() {
     });
   }
 }
-
 function updateMoodOptions() {
   const moodSelect = document.getElementById("mood");
-  moodSelect.innerHTML = "";
   const moods = weatherMoods[
     Object.keys(weatherMoods).find((key) => weatherCondition.includes(key))
   ]?.moods || ["happy"];
@@ -156,7 +152,6 @@ function displayRecommendations() {
   const foodList = weatherMoods[moodKey]?.food || ["Comfort food"];
   const selectedActivities = activityList.slice(0, 5);
   const selectedFood = foodList.slice(0, 5);
-
   recommendationsDiv.innerHTML = `
     <h3>Recommended</h3>
     <div class="recommendation-columns">
@@ -175,7 +170,6 @@ function displayRecommendations() {
     </div>
   `;
 }
-
 function applyWeatherTheme(condition) {
   document.body.className = "";
   const audioElement = document.getElementById("background-audio");
@@ -224,7 +218,6 @@ async function generatePlaylist() {
   const apiKey = "9c99acb3b0dd6b28314ed0740e50e7ee";
   const url = `https://ws.audioscrobbler.com/2.0/?method=tag.gettoptracks&tag=${mood}&api_key=${apiKey}&format=json`;
   const playlistDiv = document.getElementById("playlist");
-  playlistDiv.innerHTML = "";
   try {
     if (!allSongs.length || allSongs.mood !== mood) {
       const response = await fetch(url);
@@ -273,4 +266,4 @@ function savePlaylist() {
   link.click();
   document.body.removeChild(link);
 }
-fetchWeather();
+fetchWeather()
