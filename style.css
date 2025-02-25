@@ -35,7 +35,7 @@ body.rainy h2 {
 body.cloudy h2 {
   color: #34495e;
 }
-body.snowy h2 {
+body.snow h2 {
   color: #0984e3;
 }
 body.thunderstorm h2 {
@@ -194,7 +194,7 @@ body.rainy h3 {
 body.cloudy h3 {
   color: #34495e;
 }
-body.snowy h3 {
+body.snow h3 {
   color: #0984e3;
 }
 body.thunderstorm h3 {
@@ -212,7 +212,7 @@ body.rainy {
 body.cloudy {
   background-image: url("./assets/PARTCLOUD.PNG");
 }
-body.snowy {
+body.snow {
   background-image: url("./assets/snow.png");
 }
 body.thunderstorm {
