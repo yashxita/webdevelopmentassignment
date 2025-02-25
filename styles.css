@@ -6,7 +6,7 @@ body {
     background-attachment: fixed;
     color: #333;
     transition: background 0.5s ease, color 0.5s ease;
-    background-image: url("file:///Users/yashitapuri/Downloads/home.png");
+    background-image: url("./assets/home.png");
   }
   .container {
     max-width: 1200px;
@@ -108,22 +108,22 @@ body {
     transform: scale(1.05);
   }
   body.sunny {
-    background-image: url("file:///Users/yashitapuri/Downloads/sunny.png");
+    background-image: url("./assets/sunny.png");
   }
   body.rainy {
-    background-image: url("file:///Users/yashitapuri/Downloads/rainy.png");
+    background-image: url("./assets/rainy.png");
   }
   body.cloudy {
-    background-image: url("file:///Users/yashitapuri/Downloads/PARTCLOUD.PNG");
+    background-image: url("./assets/PARTCLOUD.PNG");
   }
   body.snowy {
-    background-image: url("file:///Users/yashitapuri/Downloads/snow.png");
+    background-image: url("./assets/snow.png");
   }
   body.thunderstorm {
-    background-image: url("file:///Users/yashitapuri/Downloads/thunder.png");
+    background-image: url("./assets//thunder.png");
   }
   body.clear {
-    background-image: url("file:///Users/yashitapuri/Downloads/cool.png");
+    background-image: url("./assets/cool.png");
   }
   body.sunny button {
     background: #ff8c00;

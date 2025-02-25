@@ -179,21 +179,40 @@ function displayRecommendations() {
 function applyWeatherTheme(condition) {
   document.body.className = "";
   const audioElement = document.getElementById("background-audio");
+  if (!audioElement) {
+    console.error("Audio element not found!");
+    return;
+  }
   let audioFile = "";
-
+  condition = condition.toLowerCase();
   for (let key in weatherMoods) {
-    if (condition.includes(key)) {
+    if (condition.includes(key.toLowerCase())) {
       document.body.classList.add(key);
-      audioFile = `${key}.mp3`; 
+      audioFile = `./audio/${key}.mp3`;
       break;
     }
   }
-
+  console.log("Selected Weather:", condition);
+  console.log("Audio File Path:", audioFile);
   if (audioFile) {
     audioElement.src = audioFile;
-    audioElement.play().catch((error) => {
-      console.error("Audio playback failed:", error);
-    });
+    audioElement.load();
+    audioElement
+      .play()
+      .then(() => console.log("Audio playing successfully"))
+      .catch(() => {
+        console.warn("Autoplay blocked, waiting for user interaction.");
+        const enableAudio = () => {
+          audioElement
+            .play()
+            .then(() => {
+              console.log("Audio playing after user interaction");
+              document.removeEventListener("click", enableAudio);
+            })
+            .catch((error) => console.error("Audio playback failed:", error));
+        };
+        document.addEventListener("click", enableAudio, { once: true });
+      });
   } else {
     audioElement.pause();
     audioElement.src = "";
@@ -234,7 +253,6 @@ async function generatePlaylist() {
     playlistDiv.textContent = "Failed to generate playlist. Try again later.";
   }
 }
-
 function savePlaylist() {
   const songs = document.querySelectorAll(".playlist .card");
   if (songs.length === 0) {
