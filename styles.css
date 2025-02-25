@@ -1,160 +1,223 @@
 body {
-    font-family: "Poppins", sans-serif;
-    text-align: center;
-    padding: 20px;
-    background-size: cover;
-    background-attachment: fixed;
-    color: #333;
-    transition: background 0.5s ease, color 0.5s ease;
-    background-image: url("./assets/home.png");
-  }
-  .container {
-    max-width: 1200px;
-    margin: auto;
-    padding: 25px;
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transition: 0.5s ease;
-  }
-  h2 {
-    margin-bottom: 15px;
-    font-weight: 600;
-    font-size: 50px;
-  }
-  body.sunny h2 {color: #ff8c00;}
-  body.rainy h2 {color: #1e3799;}
-  body.cloudy h2 {color: #34495e;}
-  body.snowy h2 {color: #0984e3;}
-  body.thunderstorm h2 {color: #6c5ce7;}
-  body.clear h2 {color: #000dff;}
-  select,
-  button {
-    padding: 12px 20px;
-    margin: 10px;
-    font-size: 16px;
-    border-radius: 8px;
-    border: none;
-    font-family: "Poppins", sans-serif;
-    transition: 0.3s ease-in-out;
-  }
-  button {
-    background: #007bff;
-    color: white;
-    font-weight: 500;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
-  }
-  button:hover {
-    background: #0056b3;
-    transform: scale(1.05);
-  }
-  .playlist {
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 15px;
-    justify-content: center;
-  }
-  .card {
-    background: rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(10px);
-    border-radius: 15px;
-    padding: 20px;
-    text-align: center;
-    transition: 0.3s ease-in-out;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  }
-  .card:hover {
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-    transform: translateY(-5px);
-  }
-  .weather-recommendation {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    margin-bottom: 20px;
-  }
-  .weather-card,
-  .recommendation-box {
-    flex: 1;
-    min-width: 280px;
-    background: rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(10px);
-    border-radius: 15px;
-    padding: 4px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    transition: 0.4s ease-in-out;
-    font-size: 20px;
-  }
-  .weather-card:hover,
-  .recommendation-box:hover {
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-    transform: scale(1.05);
-  }
-  body.sunny {background-image: url("./assets/sunny.png");}
-  body.rainy {background-image: url("./assets/rainy.png");}
-  body.cloudy {background-image: url("./assets/PARTCLOUD.PNG");}
-  body.snowy {background-image: url("./assets/snow.png");}
-  body.thunderstorm {background-image: url("./assets//thunder.png");}
-  body.clear {background-image: url("./assets/cool.png");}
-  body.sunny button {background: #ff8c00;}
-  body.rainy button {background: #1e3799;}
-  body.cloudy button {background: #34495e;}
-  body.snowy button {background: #0984e3;}
-  body.thunderstorm button {background: #6c5ce7;}
-  body.sunny .card {box-shadow: 0 4px 15px rgba(223, 153, 42, 0.3);}
-  body.rainy .card {box-shadow: 0 4px 15px rgba(0, 0, 255, 0.3);}
-  body.cloudy .card {box-shadow: 0 4px 15px rgba(128, 128, 128, 0.3);}
-  body.snowy .card {box-shadow: 0 4px 15px rgba(36, 185, 235, 0.3);}
-  body.thunderstorm .card {box-shadow: 0 4px 15px rgba(52, 18, 83, 0.3);}
-  .weather-box {
-    max-width: 500px;
-    margin: auto;
-    padding: 20px;
-    text-align: center;
-  }
-  .weather-details {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    text-align: left;
-  }
-  .weather-left {
-    text-align: left;
-  }
-  .weather-right {
-    text-align: right;
-  }
-  .recommendation-columns {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    padding: 30px;
-  }
-  .column {
-    flex: 1;
-  }
-  .left-align {
-    text-align: left;
-  }
-  .right-align {
-    text-align: right;
-  }
-  .text-list p {
-    margin: 5px 0;
-  }
-  h3 {
-    margin-bottom: 15px;
-    font-weight: 600;
-    font-size: 30px;
-  }
-  body.sunny h3 {color: #ff8c00;}
-  body.rainy h3 {color: #1e3799;}
-  body.cloudy h3 {color: #34495e;}
-  body.snowy h3 {color: #0984e3;}
-  body.thunderstorm h3 {color: #6c5ce7;}
-  body.clear h3 {color: #000dff;}
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+  padding: 20px;
+  background-size: cover;
+  background-attachment: fixed;
+  color: #333;
+  transition: background 0.5s ease, color 0.5s ease;
+  background-image: url("./assets/home.png");
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 25px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: 0.5s ease;
+}
+
+h2 {
+  margin-bottom: 15px;
+  font-weight: 600;
+  font-size: 50px;
+}
+
+body.sunny h2 {
+  color: #ff8c00;
+}
+body.rainy h2 {
+  color: #1e3799;
+}
+body.cloudy h2 {
+  color: #34495e;
+}
+body.snowy h2 {
+  color: #0984e3;
+}
+body.thunderstorm h2 {
+  color: #6c5ce7;
+}
+body.clear h2 {
+  color: #000dff;
+}
+
+select,
+button {
+  padding: 12px 20px;
+  margin: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  font-family: "Poppins", sans-serif;
+  transition: 0.3s ease-in-out;
+}
+
+button {
+  background: #007bff;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+  margin-top: 20px;
+}
+
+button:hover {
+  background: #0056b3;
+  transform: scale(1.05);
+}
+
+.playlist {
+  margin: auto;
+  overflow: hidden;
+  width: 100%;
+  text-align: center;
+}
+
+.card {
+  width: 30%;
+  float: none;
+  display: inline-block;
+  margin: 1.5%;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 20px;
+  text-align: center;
+  transition: 0.3s ease-in-out;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.card:hover {
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  transform: translateY(-5px);
+}
+
+.weather-recommendation {
+  overflow: hidden;
+  margin-bottom: 20px;
+  padding: 30px;
+}
+
+.weather-card {
+  width: 48%;
+  float: left;
+  margin-right: 4%;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: 0.4s ease-in-out;
+  font-size: 20px;
+}
+
+.recommendation-box {
+  width: 44%;
+  float: right;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: 0.4s ease-in-out;
+  font-size: 20px;
+}
+
+.weather-card:hover,
+.recommendation-box:hover {
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
+}
+
+.weather-box {
+  max-width: 500px;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.weather-details {
+  overflow: hidden;
+}
+
+.weather-left {
+  float: left;
+  width: 50%;
+  text-align: left;
+}
+
+.weather-right {
+  float: right;
+  width: 50%;
+  text-align: right;
+}
+
+.recommendation-columns {
+  overflow: hidden;
+  padding: 30px;
+}
+
+.column {
+  float: left;
+  width: 50%;
+}
+
+.left-align {
+  text-align: left;
+}
+
+.right-align {
+  text-align: right;
+}
+
+.text-list p {
+  margin: 5px 0;
+}
+
+h3 {
+  margin-bottom: 15px;
+  font-weight: 600;
+  font-size: 30px;
+}
+
+body.sunny h3 {
+  color: #ff8c00;
+}
+body.rainy h3 {
+  color: #1e3799;
+}
+body.cloudy h3 {
+  color: #34495e;
+}
+body.snowy h3 {
+  color: #0984e3;
+}
+body.thunderstorm h3 {
+  color: #6c5ce7;
+}
+body.clear h3 {
+  color: #000dff;
+}
+body.sunny {
+  background-image: url("./assets/sunny.png");
+}
+body.rainy {
+  background-image: url("./assets/rainy.png");
+}
+body.cloudy {
+  background-image: url("./assets/PARTCLOUD.PNG");
+}
+body.snowy {
+  background-image: url("./assets/snow.png");
+}
+body.thunderstorm {
+  background-image: url("./assets//thunder.png");
+}
+body.clear {
+  background-image: url("./assets/cool.png");
+}

@@ -133,38 +133,52 @@ async function fetchWeather() {
 }
 function updateMoodOptions() {
   const moodSelect = document.getElementById("mood");
-  const moods = weatherMoods[
-    Object.keys(weatherMoods).find((key) => weatherCondition.includes(key))
-  ]?.moods || ["happy"];
-  moods.forEach((mood) => {
+  let selectedKey = "clear";
+  for (const key in weatherMoods) {
+    if (weatherCondition.includes(key)) {
+      selectedKey = key;
+      break;
+    }
+  }
+  const moods = weatherMoods[selectedKey]?.moods || ["happy"];
+  moodSelect.innerHTML = ""; 
+  for (let i = 0; i < moods.length; i++) {
     const option = document.createElement("option");
-    option.value = mood;
-    option.textContent = mood.charAt(0).toUpperCase() + mood.slice(1);
+    option.value = moods[i];
+    option.textContent = moods[i].charAt(0).toUpperCase() + moods[i].slice(1);
     moodSelect.appendChild(option);
-  });
+  }
 }
 function displayRecommendations() {
   const recommendationsDiv = document.getElementById("recommendations");
-  const moodKey =
-    Object.keys(weatherMoods).find((key) => weatherCondition.includes(key)) ||
-    "clear";
-  const activityList = weatherMoods[moodKey]?.activities || ["Relax at home"];
-  const foodList = weatherMoods[moodKey]?.food || ["Comfort food"];
-  const selectedActivities = activityList.slice(0, 5);
-  const selectedFood = foodList.slice(0, 5);
+  let moodKey = "clear";
+  for (const key in weatherMoods) {
+    if (weatherCondition.includes(key)) {
+      moodKey = key;
+      break;
+    }
+  }
+  const { activities = ["Relax at home"], food = ["Comfort food"] } =
+    weatherMoods[moodKey] || {};
   recommendationsDiv.innerHTML = `
     <h3>Recommended</h3>
     <div class="recommendation-columns">
       <div class="column left-align">
         <strong>Activities</strong>
         <div class="text-list">
-          ${selectedActivities.map((activity) => `<p>${activity}</p>`).join("")}
+          ${activities
+            .slice(0, 5)
+            .map((activity) => `<p>${activity}</p>`)
+            .join("")}
         </div>
       </div>
       <div class="column right-align">
         <strong>Food</strong>
         <div class="text-list">
-          ${selectedFood.map((food) => `<p>${food}</p>`).join("")}
+          ${food
+            .slice(0, 5)
+            .map((item) => `<p>${item}</p>`)
+            .join("")}
         </div>
       </div>
     </div>
@@ -218,6 +232,7 @@ async function generatePlaylist() {
   const apiKey = "9c99acb3b0dd6b28314ed0740e50e7ee";
   const url = `https://ws.audioscrobbler.com/2.0/?method=tag.gettoptracks&tag=${mood}&api_key=${apiKey}&format=json`;
   const playlistDiv = document.getElementById("playlist");
+  playlistDiv.innerHTML = "";
   try {
     if (!allSongs.length || allSongs.mood !== mood) {
       const response = await fetch(url);
@@ -229,10 +244,16 @@ async function generatePlaylist() {
         return;
       }
     }
-    const shuffledSongs = [...allSongs.songs]
-      .sort(() => Math.random() - 0.5)
-      .slice(0, 20);
-    shuffledSongs.forEach((song) => {
+    let shuffledSongs = allSongs.songs.slice();
+    for (let i = shuffledSongs.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      let temp = shuffledSongs[i];
+      shuffledSongs[i] = shuffledSongs[j];
+      shuffledSongs[j] = temp;
+    }
+    shuffledSongs = shuffledSongs.slice(0, 20);
+    for (let i = 0; i < shuffledSongs.length; i++) {
+      const song = shuffledSongs[i];
       const card = document.createElement("div");
       card.classList.add("card");
       card.innerHTML = `
@@ -241,7 +262,7 @@ async function generatePlaylist() {
             `;
       card.onclick = () => window.open(song.url, "_blank");
       playlistDiv.appendChild(card);
-    });
+    }
   } catch (error) {
     playlistDiv.textContent = "Failed to generate playlist. Try again later.";
   }
@@ -258,12 +279,12 @@ function savePlaylist() {
       song.querySelector("p").innerText
     }\n`;
   });
-  const blob = new Blob([playlistContent], { type: "text/plain" });
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = "My_Playlist.txt";
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+  const textarea = document.createElement("textarea");
+  textarea.value = playlistContent;
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand("copy");
+  document.body.removeChild(textarea);
+  alert("Playlist copied to clipboard! Paste it into a text file and save.");
 }
-fetchWeather()
+fetchWeather();
