@@ -1,6 +1,6 @@
 let weatherCondition = "clear";
 const weatherMoods = {
-  rain: {
+  rainy: {
     moods: ["romantic", "gloomy", "chill"],
     activities: [
       "Read a book",
