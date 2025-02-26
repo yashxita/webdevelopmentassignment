@@ -96,7 +96,7 @@ async function fetchWeather() {
     navigator.geolocation.getCurrentPosition(async (position) => {
       const lat = position.coords.latitude;
       const lon = position.coords.longitude;
-      const apiKey = "ab44c6bf9ba74232b6990816252402";
+      const apiKey = "4dfc4a92c72b4af1a25114812252602";
       const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lat},${lon}`;
       try {
         const response = await fetch(url);
