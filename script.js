@@ -229,7 +229,7 @@ function applyWeatherTheme(condition) {
 let allSongs = [];
 async function generatePlaylist() {
   const mood = document.getElementById("mood").value;
-  const apiKey = "9c99acb3b0dd6b28314ed0740e50e7ee";
+  const apiKey = "e2f7879c358811723f993dcc8b7b1e06";
   const url = `https://ws.audioscrobbler.com/2.0/?method=tag.gettoptracks&tag=${mood}&api_key=${apiKey}&format=json`;
   const playlistDiv = document.getElementById("playlist");
   playlistDiv.innerHTML = "";
